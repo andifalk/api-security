@@ -22,4 +22,9 @@ public class UserLoginApi {
         return userLoginService.login(user);
     }
 
+    @GetMapping("/me")
+    public User me(@AuthenticationPrincipal User user) {
+        return user;
+    }
+
 }
