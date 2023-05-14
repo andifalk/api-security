@@ -1,0 +1,37 @@
+type Query {
+    vehicle(identifier: ID!): Vehicle
+    vehicles: [Vehicle]
+    post(identifier: ID!): CommunityPost
+    posts: [CommunityPost]
+}
+
+""" A Vehicle """
+type  Vehicle{
+    identifier: ID!
+    vin: String!
+    model: String!
+    manufacturer: Manufacturer!
+    location: String!
+    owner: ID!
+}
+
+""" A CommunityPost """
+type  CommunityPost{
+    identifier: ID!
+    title: String!
+    content: String!
+    author: ID!
+    email: String!
+    vehicle: String!
+}
+
+enum Manufacturer {
+  AUDI
+  BMW
+  FORD
+  MERCEDES
+  TESLA
+  TOYOTA
+  VW
+}
+

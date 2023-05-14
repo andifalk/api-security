@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: insecure-api
+  jpa:
+    open-in-view: false
+server:
+  error:
+    include-stacktrace: always
+  port: 9090
+logging:
+  level:
+    org.springframework.security: debug
+
+vehicle-service:
+  secret-key: 123456789012345678901234567890123
