@@ -5,7 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,7 +15,8 @@ public class UserEntity extends AbstractPersistable<Long> {
     private String lastName;
     private String email;
     private String password;
-    @ElementCollection(fetch = FetchType.EAGER) private List<String> roles;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles;
 
     public UserEntity() {
     }

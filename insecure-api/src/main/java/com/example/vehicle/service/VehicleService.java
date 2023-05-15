@@ -1,6 +1,5 @@
 package com.example.vehicle.service;
 
-import com.example.vehicle.entity.VehicleEntity;
 import com.example.vehicle.entity.VehicleEntityRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

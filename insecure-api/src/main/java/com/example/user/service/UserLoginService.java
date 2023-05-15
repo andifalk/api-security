@@ -46,7 +46,7 @@ public class UserLoginService {
 
         payload.put("iss", "vehicle-service");
         payload.put("exp", Math.abs(System.currentTimeMillis() / 1000) + (5 * 60));
-        payload.put("aud", new String[] {"vehicle-service"});
+        payload.put("aud", new String[]{"vehicle-service"});
         payload.put("sub", user.getIdentifier());
         payload.put("scope", "openid email profile");
         payload.put("roles", user.getRoles());
