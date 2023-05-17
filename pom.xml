@@ -67,6 +67,7 @@
 
   <modules>
     <module>insecure-api</module>
+    <module>secure-api</module>
     <module>partner-workshop</module>
 </modules>
 </project>

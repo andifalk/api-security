@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: secure-api
+  jpa:
+    open-in-view: false
+  graphql:
+    graphiql:
+      path: /dev/graphiql
+      enabled: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:9000/oauth2/jwks
+server:
+  error:
+    include-stacktrace: never
+  port: 9091
+logging:
+  level:
+    org.springframework.security: debug
+
+vehicle:
+  workshop:
+    partner-urls:
+      - http://localhost:9092/api/workshop
