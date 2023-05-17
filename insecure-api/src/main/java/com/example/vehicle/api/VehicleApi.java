@@ -5,6 +5,7 @@ import com.example.vehicle.service.VehicleService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +30,14 @@ public class VehicleApi {
     @GetMapping
     public List<Vehicle> getAllVehicles() {
         return vehicleService.findAll();
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<Vehicle> registerVehicle(@RequestBody Vehicle vehicle, UriComponentsBuilder uriBuilder) {
+        Vehicle registeredVehicle = vehicleService.register(vehicle);
+        return ResponseEntity.created(
+                uriBuilder.path("/vehicles/{id}").buildAndExpand(registeredVehicle.getIdentifier())
+                        .toUri()).body(registeredVehicle);
     }
 
     @PostMapping("/{vehicleIdentifier}/contact-workshop")

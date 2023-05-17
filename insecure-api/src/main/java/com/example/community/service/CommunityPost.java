@@ -85,7 +85,7 @@ public class CommunityPost implements Serializable {
 
     @Override
     public String toString() {
-        return "CommunityPostEntity{" +
+        return "CommunityPost{" +
                 "identifier=" + identifier +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +

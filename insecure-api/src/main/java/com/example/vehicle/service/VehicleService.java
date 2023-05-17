@@ -27,6 +27,9 @@ public class VehicleService {
 
     @Transactional
     public Vehicle register(Vehicle vehicle) {
+        if (vehicle.getIdentifier() == null) {
+            vehicle.setIdentifier(String.valueOf(((Integer.parseInt(vehicleEntityRepository.findMaxIdentifier()) + 1))));
+        }
         return new Vehicle(vehicleEntityRepository.save(vehicle.toEntity()));
     }
 

@@ -5,6 +5,10 @@ type Query {
     posts: [CommunityPost]
 }
 
+type Mutation{
+    registerVehicle(vin: ID!, model: String!, manufacturer: Manufacturer!, location: String!, owner: ID!) : Vehicle!
+}
+
 """ A Vehicle """
 type  Vehicle{
     identifier: ID!
