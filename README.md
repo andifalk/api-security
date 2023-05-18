@@ -5,11 +5,11 @@ All your APIs belong to me - API Security Demos
 
 ### Google Dorks
 
-```http request
+```
 inurl:"/includes/api/" intext:"index of /"
 ```
 
-```http request
+```
 intitle:"index of" api_key OR "api key" OR
 apiKey -pool
 ```
