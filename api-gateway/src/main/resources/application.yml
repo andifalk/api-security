@@ -21,7 +21,7 @@ spring:
                 redis-rate-limiter.requestedTokens: 1
 
 server:
-  port: 8080
+  port: 9999
   error:
     include-stacktrace: never
 

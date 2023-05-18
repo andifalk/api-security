@@ -62,7 +62,7 @@ Here we try to forge a JWTs
 2. Now try this JWT to find vulnerabilities at http://localhost:9090/api/v1/partner
    ```shell
    export JWT=
-   jwt_tool.py -t http://localhost:9090/api/v1/partner -rh "Authorization: Bearer $JWT" -cv "Here is your data for partner bruce.wayne@example.com (Bruce Wayne)" -M pb`
+   jwt_tool.py -t http://localhost:9090/api/v1/partner -rh "Authorization: Bearer $JWT" -cv "Here is your data for partner bruce.wayne@example.com (Bruce Wayne)" -M pb
    ```
 3. Finally try to brute force the JWT to find out the secret for signing a JWT using the symmetric HMAC signature algorithm
  `jwt_tool.py $JWT -C -d jwt.secrets.list`
