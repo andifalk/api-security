@@ -7,7 +7,76 @@
 	},
 	"item": [
 		{
-			"name": "Broken Authentication",
+			"name": "01: Broken Object Level Authorization",
+			"item": [
+				{
+					"name": "One Vehicle",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/vehicles/3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"vehicles",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One Vehicle (GraphQL)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{bearer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "{\n    vehicle(identifier: 1) {\n        identifier\n        location\n        manufacturer\n        vin\n        owner\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/graphql",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "02: Broken Authentication",
 			"item": [
 				{
 					"name": "Login",
@@ -88,10 +157,10 @@
 			]
 		},
 		{
-			"name": "Broken Function Level Authorization",
+			"name": "03: Broken Object Property Level Authorization",
 			"item": [
 				{
-					"name": "All Vehicles",
+					"name": "Register Vehicle",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -103,24 +172,34 @@
 								}
 							]
 						},
-						"method": "GET",
+						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"identifier\": \"4\",\n    \"vin\": \"4e4e7df4-dbc8-468b-a891-d1030601bf5a\",\n    \"model\": \"320i\",\n    \"manufacturer\": \"BMW\",\n    \"location\": \"943H+V4 L’Hospitalet de Llobregat, Spanien\",\n    \"owner\": \"f8e66c0e-5898-4fa8-9d99-fe0e2a445ad7\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{base_url}}/api/v1/vehicles",
+							"raw": "{{base_url}}/api/v1/vehicles/register",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"vehicles"
+								"vehicles",
+								"register"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "All Vehicles (GraphQL)",
+					"name": "Register Vehicle (GraphQL)",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -137,8 +216,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "{\n    vehicles {\n        identifier\n        manufacturer\n        model\n        owner\n        vin\n    }\n}",
-								"variables": ""
+								"query": "mutation registerVehicle ($vin: ID!, $model: String!, $manufacturer: Manufacturer!, $location: String!, $owner: ID!) {\n    registerVehicle (vin: $vin, model: $model, manufacturer: $manufacturer, location: $location, owner: $owner) {\n        identifier\n        vin\n        model\n        manufacturer\n        location\n        owner\n    }\n}",
+								"variables": "{\n        \"vin\": \"4e4e7df4-dbc8-468b-a891-d1030601bf5a\",\n        \"model\": \"Q3\",\n        \"manufacturer\": \"BMW\",\n        \"location\": \"943H+V4 L’Hospitalet de Llobregat, Spanien\",\n        \"owner\": \"f8e66c0e-5898-4fa8-9d99-fe0e2a445ad7\"\n}"
 							}
 						},
 						"url": {
@@ -152,12 +231,7 @@
 						}
 					},
 					"response": []
-				}
-			]
-		},
-		{
-			"name": "Broken Object Property Level Authorization",
-			"item": [
+				},
 				{
 					"name": "Community posts",
 					"request": {
@@ -220,10 +294,281 @@
 			]
 		},
 		{
-			"name": "Broken Object Level Authorization",
+			"name": "04: Unrestricted Resource Consumption",
 			"item": [
 				{
+					"name": "Community posts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/community",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"community"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Community posts (Gateway)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{gateway_url}}/api/v1/community",
+							"host": [
+								"{{gateway_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"community"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "One Vehicle",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/vehicles/ed6d9c4a-ac3f-4060-9d7c-9cdbfe82b0ea",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"vehicles",
+								"ed6d9c4a-ac3f-4060-9d7c-9cdbfe82b0ea"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "One Vehicle (GraphQL)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "{\n    vehicle(identifier: \"ed6d9c4a-ac3f-4060-9d7c-9cdbfe82b0ea\") {\n        identifier\n        location\n        manufacturer\n        vin\n        owner\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/graphql",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Vehicles",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Origin",
+								"value": "http://example.com",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/vehicles",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"vehicles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Vehicles (GraphQL)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "{\n    vehicles {\n        identifier\n        manufacturer\n        model\n        owner\n        vin\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/graphql",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Rate-Limit-Client",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9096/api/rate?requests=10&delay=500",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9096",
+							"path": [
+								"api",
+								"rate"
+							],
+							"query": [
+								{
+									"key": "requests",
+									"value": "10"
+								},
+								{
+									"key": "delay",
+									"value": "500"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "oauth2",
+				"oauth2": [
+					{
+						"key": "client_authentication",
+						"value": "body",
+						"type": "string"
+					},
+					{
+						"key": "scope",
+						"value": "openid profile email",
+						"type": "string"
+					},
+					{
+						"key": "clientSecret",
+						"value": "",
+						"type": "string"
+					},
+					{
+						"key": "clientId",
+						"value": "demo-client-pkce",
+						"type": "string"
+					},
+					{
+						"key": "authUrl",
+						"value": "http://localhost:9000/oauth2/authorize",
+						"type": "string"
+					},
+					{
+						"key": "redirect_uri",
+						"value": "http://localhost:9095/client/callback",
+						"type": "string"
+					},
+					{
+						"key": "grant_type",
+						"value": "authorization_code_with_pkce",
+						"type": "string"
+					},
+					{
+						"key": "refreshRequestParams",
+						"value": [],
+						"type": "any"
+					},
+					{
+						"key": "tokenRequestParams",
+						"value": [],
+						"type": "any"
+					},
+					{
+						"key": "authRequestParams",
+						"value": [],
+						"type": "any"
+					},
+					{
+						"key": "tokenName",
+						"value": "client_credentials",
+						"type": "string"
+					},
+					{
+						"key": "challengeAlgorithm",
+						"value": "S256",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "bwayne",
+						"type": "string"
+					},
+					{
+						"key": "password",
+						"value": "wayne",
+						"type": "string"
+					},
+					{
+						"key": "addTokenTo",
+						"value": "header",
+						"type": "string"
+					},
+					{
+						"key": "accessTokenUrl",
+						"value": "http://localhost:9000/oauth2/token",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "05: Broken Function Level Authorization",
+			"item": [
+				{
+					"name": "All Vehicles",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -236,24 +581,29 @@
 							]
 						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Origin",
+								"value": "http://example.com",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "{{base_url}}/api/v1/vehicles/1",
+							"raw": "{{base_url}}/api/v1/vehicles",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"vehicles",
-								"1"
+								"vehicles"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "One Vehicle (GraphQL)",
+					"name": "All Vehicles (GraphQL)",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -270,7 +620,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "{\n    vehicle(identifier: 1) {\n        identifier\n        location\n        manufacturer\n        vin\n        owner\n    }\n}",
+								"query": "{\n    vehicles {\n        identifier\n        manufacturer\n        model\n        owner\n        vin\n    }\n}",
 								"variables": ""
 							}
 						},
@@ -289,7 +639,7 @@
 			]
 		},
 		{
-			"name": "Server Side Request Forgery",
+			"name": "06: Server Side Request Forgery",
 			"item": [
 				{
 					"name": "Contact Workshop (SSRF)",
@@ -348,7 +698,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"problem\": \"Electronic\",\n    \"partnerApi\": \"https://springio.net\"\n}",
+							"raw": "{\n    \"problem\": \"Electronic\",\n    \"partnerApi\": \"http://localhost:9092/api/workshop\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -477,13 +827,6 @@
 					""
 				]
 			}
-		}
-	],
-	"variable": [
-		{
-			"value": "",
-			"type": "string",
-			"disabled": true
 		}
 	]
 }
