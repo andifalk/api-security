@@ -80,6 +80,7 @@ public class WebSecurityConfiguration {
                                 .requestMatchers(EndpointRequest.to("health", "info", "prometheus")).permitAll()
                                 .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
                                 .requestMatchers("/graphiql/**").permitAll()
+                                .requestMatchers("/graphql/schema/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer()

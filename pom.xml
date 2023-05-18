@@ -68,6 +68,8 @@
   <modules>
     <module>insecure-api</module>
     <module>secure-api</module>
+    <module>api-gateway</module>
     <module>partner-workshop</module>
+    <module>rate-limiter-client</module>
 </modules>
 </project>

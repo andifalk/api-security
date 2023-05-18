@@ -45,7 +45,7 @@ public class VehicleApi {
     @PostMapping("/register")
     public ResponseEntity<Vehicle> registerVehicle(@AuthenticationPrincipal User user, @RequestBody Vehicle vehicle, UriComponentsBuilder uriBuilder) {
         if (user.getIdentifier().equals(vehicle.getOwner())) {
-            Vehicle registeredVehicle = vehicleService.register(vehicle);
+            Vehicle registeredVehicle = vehicleService.register(vehicle, user.getIdentifier());
             return ResponseEntity.created(
                     uriBuilder.path("/vehicles/{id}").buildAndExpand(registeredVehicle.getIdentifier())
                             .toUri()).body(registeredVehicle);

@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  redis:
+    image: bitnami/redis:latest
+    restart: always
+    ports:
+      - '6379:6379'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    volumes:
+      - redis:/data
+volumes:
+  redis:
+    driver: local

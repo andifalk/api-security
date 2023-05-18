@@ -3,6 +3,10 @@ spring:
     name: insecure-api
   jpa:
     open-in-view: false
+  graphql:
+    schema:
+      printer:
+        enabled: true
 server:
   error:
     include-stacktrace: always

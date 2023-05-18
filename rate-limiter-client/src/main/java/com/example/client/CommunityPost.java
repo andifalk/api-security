@@ -1,6 +1,4 @@
-package com.example.community.service;
-
-import com.example.community.entity.CommunityPostEntity;
+package com.example.client;
 
 import java.io.Serializable;
 import java.util.UUID;
@@ -11,15 +9,10 @@ public class CommunityPost implements Serializable {
     private String title;
     private String content;
     private UUID author;
+    private String email;
+    private String vehicle;
 
     public CommunityPost() {
-    }
-
-    public CommunityPost(CommunityPostEntity communityPostEntity) {
-        this.identifier = communityPostEntity.getIdentifier();
-        this.title = communityPostEntity.getTitle();
-        this.content = communityPostEntity.getContent();
-        this.author = communityPostEntity.getAuthor();
     }
 
     public CommunityPost(UUID identifier, String title, String content, UUID author, String email, String vehicle) {
@@ -27,6 +20,8 @@ public class CommunityPost implements Serializable {
         this.title = title;
         this.content = content;
         this.author = author;
+        this.email = email;
+        this.vehicle = vehicle;
     }
 
     public UUID getIdentifier() {
@@ -61,6 +56,22 @@ public class CommunityPost implements Serializable {
         this.author = author;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getVehicle() {
+        return vehicle;
+    }
+
+    public void setVehicle(String vehicle) {
+        this.vehicle = vehicle;
+    }
+
     @Override
     public String toString() {
         return "CommunityPost{" +
@@ -68,11 +79,8 @@ public class CommunityPost implements Serializable {
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", author=" + author +
+                ", email='" + email + '\'' +
+                ", vehicle='" + vehicle + '\'' +
                 '}';
-    }
-
-    public CommunityPostEntity toEntity() {
-        return new CommunityPostEntity(this.identifier, this.title,
-                this.content, this.author, null, null);
     }
 }

@@ -2,8 +2,6 @@ package com.example;
 
 import com.example.community.entity.CommunityPostEntity;
 import com.example.community.entity.CommunityPostEntityRepository;
-import com.example.user.entity.UserEntity;
-import com.example.user.entity.UserEntityRepository;
 import com.example.vehicle.entity.Manufacturer;
 import com.example.vehicle.entity.VehicleEntity;
 import com.example.vehicle.entity.VehicleEntityRepository;
@@ -27,35 +25,20 @@ public class DataInitializer implements CommandLineRunner {
     private static final String WAYNE_VEHICLE_ID = "ed6d9c4a-ac3f-4060-9d7c-9cdbfe82b0ea";
     private static final String PARKER_VEHICLE_ID = "2d20c657-c3d5-434e-ac5c-dcac711c73aa";
     private static final String KENT_VEHICLE_ID = "957e7f95-5876-435e-8aa6-936e566fa2c3";
-    private final UserEntityRepository userEntityRepository;
     private final VehicleEntityRepository vehicleEntityRepository;
     private final CommunityPostEntityRepository communityPostEntityRepository;
-    private final PasswordEncoder passwordEncoder;
 
-    public DataInitializer(UserEntityRepository userEntityRepository, VehicleEntityRepository vehicleEntityRepository,
-                           CommunityPostEntityRepository communityPostEntityRepository, PasswordEncoder passwordEncoder) {
-        this.userEntityRepository = userEntityRepository;
+    public DataInitializer(VehicleEntityRepository vehicleEntityRepository,
+                           CommunityPostEntityRepository communityPostEntityRepository) {
         this.vehicleEntityRepository = vehicleEntityRepository;
         this.communityPostEntityRepository = communityPostEntityRepository;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional
     @Override
     public void run(String... args) {
-        //createUsers();
         createVehicles();
         createCommunityPosts();
-    }
-
-    @Deprecated
-    private void createUsers() {
-        List<UserEntity> users = Stream.of(
-                new UserEntity(UUID.fromString(WAYNE_ID), "Bruce", "Wayne", "bruce.wayne@example.com", passwordEncoder.encode("wayne"), List.of("USER")),
-                new UserEntity(UUID.fromString(PARKER_ID), "Peter", "Parker", "peter.parker@example.com", passwordEncoder.encode("parker"), List.of("USER")),
-                new UserEntity(UUID.fromString(KENT_ID), "Clark", "Kent", "clark.kent@example.com", passwordEncoder.encode("kent"), List.of("USER", "ADMIN"))
-        ).map(userEntityRepository::save).toList();
-        LOG.info("Created {} number of users", users.size());
     }
 
     private void createVehicles() {

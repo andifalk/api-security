@@ -29,10 +29,11 @@ public class VehicleService {
     }
 
     @Transactional
-    public Vehicle register(Vehicle vehicle) {
+    public Vehicle register(Vehicle vehicle, UUID userIdentifier) {
         if (vehicle.getIdentifier() == null) {
             vehicle.setIdentifier(UUID.randomUUID());
         }
+        vehicle.setOwner(userIdentifier);
         return new Vehicle(vehicleEntityRepository.save(vehicle.toEntity()));
     }
 

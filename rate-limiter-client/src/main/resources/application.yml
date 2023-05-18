@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: rate-limit-client
+server:
+  port: 9096
+  error:
+    include-stacktrace: never
+
+logging:
+  level:
+    web: DEBUG

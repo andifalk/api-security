@@ -6,7 +6,7 @@ spring:
   graphql:
     graphiql:
       path: /dev/graphiql
-      enabled: true
+      enabled: false
   security:
     oauth2:
       resourceserver:

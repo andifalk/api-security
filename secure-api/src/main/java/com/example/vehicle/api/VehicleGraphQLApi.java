@@ -8,6 +8,7 @@ import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 
@@ -29,6 +30,7 @@ public class VehicleGraphQLApi {
         return vehicleService.findOneByIdentifierAndOwner(identifier, user.getIdentifier());
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @QueryMapping
     public List<Vehicle> vehicles() {
         return vehicleService.findAll();
@@ -41,7 +43,7 @@ public class VehicleGraphQLApi {
 
         if (user.getIdentifier().equals(owner)) {
             Vehicle vehicle = new Vehicle(null, vin, model, manufacturer, location, owner);
-            return vehicleService.register(vehicle);
+            return vehicleService.register(vehicle, user.getIdentifier());
         } else {
             throw new AccessDeniedException("You are not authorized to register another user's vehicle");
         }
