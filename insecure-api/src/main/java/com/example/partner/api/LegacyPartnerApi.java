@@ -3,6 +3,8 @@ package com.example.partner.api;
 import com.example.user.service.User;
 import com.nimbusds.jwt.JWT;
 import com.nimbusds.jwt.JWTParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -29,6 +31,7 @@ import java.util.regex.Pattern;
 @RequestMapping("/api/v1/partner")
 public class LegacyPartnerApi {
     private static final Pattern authorizationPattern = Pattern.compile("^Bearer (?<token>[a-zA-Z0-9-._~+/]+=*)$", 2);
+    private static final Logger LOG = LoggerFactory.getLogger(LegacyPartnerApi.class);
     private final Converter<Map<String, Object>, Map<String, Object>> claimSetConverter = MappedJwtClaimSetConverter
             .withDefaults(Collections.emptyMap());
     private final Converter<Jwt, AbstractAuthenticationToken> authenticationConverter;
@@ -39,17 +42,21 @@ public class LegacyPartnerApi {
 
     @GetMapping
     public String readPartnerData(@RequestHeader("Authorization") String authzHeader) {
+        LOG.info("Reading partner data - Checking authentication on {}", authzHeader);
         User user = parsePartnerJwt(authzHeader);
+        LOG.info("Reading partner data for authenticated user {}", user);
         return String.format("Here is your data for partner %s (%s %s)",
                 Objects.requireNonNull(user).getEmail(), user.getFirstName(), user.getLastName());
     }
 
     private User parsePartnerJwt(String authorization) {
         if (!StringUtils.startsWithIgnoreCase(authorization, "bearer")) {
+            LOG.error("Not a bearer token: {}", authorization);
             return null;
         } else {
             Matcher matcher = authorizationPattern.matcher(authorization);
             if (!matcher.matches()) {
+                LOG.error("Bearer token is malformed: {}", authorization);
                 BearerTokenError error = BearerTokenErrors.invalidToken("Bearer token is malformed");
                 throw new OAuth2AuthenticationException(error);
             } else {
@@ -66,6 +73,9 @@ public class LegacyPartnerApi {
                                     c.putAll(claims);
                                 }
                             }).build();
+                    LOG.info("Token headers: {}", headers);
+                    LOG.info("Token claims: {}", claims);
+
                 } catch (ParseException e) {
                     throw new BadCredentialsException("Invalid Token", e);
                 }

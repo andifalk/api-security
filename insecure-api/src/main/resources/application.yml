@@ -13,6 +13,7 @@ server:
   port: 9090
 logging:
   level:
+    org.springframework.web: debug
     org.springframework.security: debug
 
 vehicle-service:

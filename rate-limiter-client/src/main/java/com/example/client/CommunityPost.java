@@ -3,6 +3,7 @@ package com.example.client;
 import java.io.Serializable;
 import java.util.UUID;
 
+@SuppressWarnings("unused")
 public class CommunityPost implements Serializable {
 
     private UUID identifier;

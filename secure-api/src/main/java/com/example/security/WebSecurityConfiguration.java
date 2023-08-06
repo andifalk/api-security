@@ -8,9 +8,11 @@ import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -30,20 +32,22 @@ public class WebSecurityConfiguration {
     @Bean
     public SecurityFilterChain api(HttpSecurity http) throws Exception {
         http
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .csrf().disable()
+                .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .csrf(AbstractHttpConfigurer::disable)
                 //.cors(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize ->
                         authorize
                                 .requestMatchers(EndpointRequest.to("health", "info", "prometheus")).permitAll()
-                                .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
-                                .requestMatchers("/graphiql/**").permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/v3/api-docs/**")).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/swagger-ui.html")).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/swagger-ui/**")).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/graphiql/**")).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/graphql/**")).permitAll()
                                 .anyRequest().authenticated()
                 )
-                .oauth2ResourceServer()
-                .jwt()
-                .jwtAuthenticationConverter(authenticationTokenConverter);
+                .oauth2ResourceServer(o -> o.jwt(j -> {
+                         j.jwtAuthenticationConverter(authenticationTokenConverter);
+                }));
         return http.build();
     }
     @Bean

@@ -61,7 +61,7 @@ public class DataInitializer implements CommandLineRunner {
         List<VehicleEntity> vehicles = Stream.of(
                 new VehicleEntity(WAYNE_VEHICLE_ID, UUID.randomUUID(), "330xi", Manufacturer.BMW, "943H+V4 L’Hospitalet de Llobregat, Spain", UUID.fromString(WAYNE_ID)),
                 new VehicleEntity(PARKER_VEHICLE_ID, UUID.randomUUID(), "Model 3", Manufacturer.TESLA, "GVPV+6X London, UK", UUID.fromString(PARKER_ID)),
-                new VehicleEntity(KENT_VEHICLE_ID, UUID.randomUUID(), "330xi", Manufacturer.BMW, "943H+V4 L’Hospitalet de Llobregat, Spanien", UUID.fromString(KENT_ID))
+                new VehicleEntity(KENT_VEHICLE_ID, UUID.randomUUID(), "Q3", Manufacturer.AUDI, "3011 Bern, Switzerland", UUID.fromString(KENT_ID))
         ).map(vehicleEntityRepository::save).toList();
         LOG.info("Created {} number of vehicles", vehicles.size());
     }

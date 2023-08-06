@@ -45,7 +45,7 @@ public class UserLoginService {
         Map<String, Object> payload = new HashMap<>();
 
         payload.put("iss", "vehicle-service");
-        payload.put("exp", Math.abs(System.currentTimeMillis() / 1000) + (5 * 60));
+        payload.put("exp", Math.abs(System.currentTimeMillis() / 1000) + (120 * 60));
         payload.put("aud", new String[]{"vehicle-service"});
         payload.put("sub", user.getIdentifier());
         payload.put("scope", "openid email profile");
