@@ -7,6 +7,9 @@ spring:
     graphiql:
       path: /dev/graphiql
       enabled: false
+    schema:
+      printer:
+        enabled: false
   security:
     oauth2:
       resourceserver:
@@ -19,6 +22,12 @@ server:
 logging:
   level:
     org.springframework.security: debug
+
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false
 
 vehicle:
   workshop:
