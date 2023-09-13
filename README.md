@@ -34,6 +34,7 @@ To try all the demos in this repository you need:
 * Any JAVA IDE you like
 * Any tool to execute REST or GraphQL API calls (recommended tool is [Postman](https://www.postman.com/), but you may also use [curl](https://curl.se/) or [httpie](https://httpie.io/)) 
 * Python 3.6+ and the [JWT_Tool](https://github.com/ticarpi/jwt_tool) to forge JSON Web Tokens (JWTs)
+* The [custom spring authorization server](https://github.com/andifalk/custom-spring-authorization-server) as identity provider when you want to try the secure api application. 
 
 ## Presentation Slides
 
@@ -99,8 +100,8 @@ Now try the same on the secure API.
 
 1. Stop the `insecure-api` application
 2. Start the `secure-api` application
-3. Login using http://localhost:9090/api/v1/users/login
-   and specify the credentials `bruce.wayne@example.com / wayne` to log in
+3. Login using http://localhost:9090/api/v1/users/login is not possible anymore.
+   This is replaced by an identity provider (spring authorization server). So you have to start the [custom spring authorization server](https://github.com/andifalk/custom-spring-authorization-server) and specify the credentials `bwayne / wayne` to log in using the OAuth2/OpenID Connect protocol. You can trigger this by navigating to the _Authorization_ tab of the top level folder of in the Postman collection. Use the token and store it as variable `bearer_token`.
 4. Try to enumerate getting a vehicle from http://localhost:9090/api/v1/vehicles/{vehicle_id}, e.g. http://localhost:9090/api/v1/vehicles/1
 5. Check again if you still can access other user's vehicle data
 

@@ -3,9 +3,9 @@ package com.example.apigateway.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
-import org.springframework.security.config.web.server.ServerHttpSecurity.OAuth2ResourceServerSpec;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.util.matcher.PathPatternParserServerWebExchangeMatcher;
 
@@ -30,8 +30,8 @@ public class WebSecurityConfiguration {
                 .authorizeExchange((exchanges) -> exchanges
                         .anyExchange().authenticated()
                 )
-                .oauth2ResourceServer(OAuth2ResourceServerSpec::jwt)
-                .csrf().disable();
+                .oauth2ResourceServer(o -> o.jwt(Customizer.withDefaults()))
+                .csrf(ServerHttpSecurity.CsrfSpec::disable);
         return http.build();
     }
 }
