@@ -658,7 +658,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"problem\": \"Electronic\",\n    \"partnerApi\": \"https://springio.net\"\n}",
+							"raw": "{\n    \"problem\": \"Electronic\",\n    \"partnerApi\": \"https://heise.de\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -698,7 +698,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"problem\": \"Electronic\",\n    \"partnerApi\": \"http://localhost:9092/api/workshop\"\n}",
+							"raw": "{\n    \"problem\": \"Electronic does have problems\",\n    \"partnerApi\": \"http://localhost:9092/api/workshop\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
