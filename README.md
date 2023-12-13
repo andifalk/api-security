@@ -127,9 +127,9 @@ Try to access another user's vehicle, you should not have access to.
 
 Now try the same on the secure API.
 
-1. Login using http://localhost:9090/api/v1/users/login is not possible anymore.
+1. Login using http://localhost:9091/api/v1/users/login is not possible anymore.
    This is replaced by an identity provider (spring authorization server). So you have to start the [custom spring authorization server](https://github.com/andifalk/custom-spring-authorization-server) and specify the credentials `bwayne / wayne` to log in using the OAuth2/OpenID Connect protocol. You can trigger this by navigating to the _Authorization_ tab of the top level folder of in the Postman collection. Use the token and store it as variable `bearer_token`.
-2. Try to enumerate getting a vehicle from http://localhost:9090/api/v1/vehicles/{vehicle_id}, e.g. http://localhost:9090/api/v1/vehicles/1
+2. Try to enumerate getting a vehicle from http://localhost:9091/api/v1/vehicles/{vehicle_id}, e.g. http://localhost:9091/api/v1/vehicles/1
 3. Check again if you still can access other user's vehicle data
 
 #### API2:2023 Broken Authentication
@@ -206,7 +206,7 @@ Try to get some sensitive data exposed.
 ##### Step 2: The secure way
 
 1. Login using Custom Spring Authorization Server
-   and specify the creds `bwayne / wayne` to log in
+   and specify the credentials `bwayne / wayne` to log in
 2. Try to enumerate getting a vehicle from http://localhost:9091/api/v1/community
 
 You will recognize it is much more difficult to enumerate different ids for vehicles as ids have to be a UUID now.
@@ -224,7 +224,7 @@ To make it easier to verify the authorization you could try these vehicle ids:
 Try a Denial of Service attack.
 
 1. Login using http://localhost:9090/api/v1/users/login
-   and specify the creds `bruce.wayne@example.com / wayne` to log in
+   and specify the credentials `bruce.wayne@example.com / wayne` to log in
 2. Try to flood http://localhost:9090/api/v1/community with requests
 
 For this use the rate limit client with the JWT from login.
@@ -233,13 +233,13 @@ You could also use [Locust](https://github.com/locustio/locust) for this.
 If you already have installed python3 then you just have to perform a `pip install locust` to install locust.
 
 Then use the provided file `locustfile.py` and run `locust -f locustfile.py`
-In the [Locust web UI](http://0.0.0.0:8089/) specify the target server http://localhost:9091 of the backend service.
+In the [Locust web UI](http://0.0.0.0:8089/) specify the target server http://localhost:9090 of the backend service.
 
 ##### Step 2: Use the Rate Limiter of the API Gateway
 
 1. Login using Custom Spring Authorization Server
-   and specify the creds `bwayne / wayne` to log in
-2. Try to flood http://localhost:9090/api/v1/community with requests
+   and specify the credentials `bwayne / wayne` to log in
+2. Try to flood http://localhost:9091/api/v1/community with requests
 
 For this use the rate limit client with the JWT from the Custom Spring Authorization Server.
 
