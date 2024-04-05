@@ -19,10 +19,7 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.security.web.util.matcher.RequestMatcher;
-import org.springframework.security.web.util.matcher.RequestMatchers;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -34,10 +31,8 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.List;
 
-import static org.springframework.security.config.http.MatcherType.mvc;
-
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity(debug = true)
 public class WebSecurityConfiguration {
 
     private final String secretKeyValue;
@@ -71,7 +66,6 @@ public class WebSecurityConfiguration {
         return http.build();
     }
 
-    @Order(3)
     @Bean
     public SecurityFilterChain api(HttpSecurity http) throws Exception {
         http
@@ -80,7 +74,7 @@ public class WebSecurityConfiguration {
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize ->
                         authorize
-                                .requestMatchers(EndpointRequest.to("health", "info", "prometheus")).permitAll()
+                                .requestMatchers(EndpointRequest.to("actuator", "health", "info", "env")).permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/v3/api-docs/**")).permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/swagger-ui.html")).permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/swagger-ui/**")).permitAll()

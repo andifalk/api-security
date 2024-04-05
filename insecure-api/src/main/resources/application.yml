@@ -7,10 +7,28 @@ spring:
     schema:
       printer:
         enabled: true
+    graphiql:
+      enabled: true
 server:
   error:
     include-stacktrace: always
   port: 9090
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+    env:
+      roles: ['USER']
+      show-values: when_authorized
+  info:
+    env:
+      enabled: true
+
 logging:
   level:
     org.springframework.web: debug
