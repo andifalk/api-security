@@ -1,16 +1,19 @@
 package com.example.security;
 
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtValidators;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
@@ -24,9 +27,11 @@ import java.util.List;
 public class WebSecurityConfiguration {
 
     private final Converter<Jwt, AbstractAuthenticationToken> authenticationTokenConverter;
+    private final OAuth2ResourceServerProperties oAuth2ResourceServerProperties;
 
-    public WebSecurityConfiguration(Converter<Jwt, AbstractAuthenticationToken> authenticationTokenConverter) {
+    public WebSecurityConfiguration(Converter<Jwt, AbstractAuthenticationToken> authenticationTokenConverter, OAuth2ResourceServerProperties oAuth2ResourceServerProperties) {
         this.authenticationTokenConverter = authenticationTokenConverter;
+        this.oAuth2ResourceServerProperties = oAuth2ResourceServerProperties;
     }
 
     @Bean
@@ -59,5 +64,19 @@ public class WebSecurityConfiguration {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
+    }
+
+    @Bean
+    JwtDecoder jwtDecoder() {
+        NimbusJwtDecoder jwtDecoder = NimbusJwtDecoder
+                .withJwkSetUri(oAuth2ResourceServerProperties.getJwt().getJwkSetUri())
+                .validateType(false).build();
+        jwtDecoder.setJwtValidator(JwtValidators.createDefaultWithValidators(
+                List.of(
+                        JwtValidators.createAtJwtValidator()
+                                .audience("demo-client-jwt-pkce")
+                                .clientId("demo-client-jwt-pkce")
+                                .issuer("http://localhost:9500").build())));
+        return jwtDecoder;
     }
 }

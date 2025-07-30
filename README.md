@@ -110,7 +110,7 @@ Before starting to hack APIs make sure you have started all the required applica
 * SecureApiApplication (running at http://localhost:9091)
 * PartnerWorkshopApplication (running at http://localhost:9092)
 * ApiGatewayApplication (running at http://localhost:9999)
-* SpringAuthorizationServerApplication (running at http://localhost:9000)
+* SpringAuthorizationServerApplication (running at http://localhost:9500)
 
 #### API1:2023 Broken Object Level Authorization
 

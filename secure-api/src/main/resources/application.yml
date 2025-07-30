@@ -14,14 +14,14 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: http://localhost:9000/oauth2/jwks
+          jwk-set-uri: http://localhost:9500/oauth2/jwks
 server:
   error:
     include-stacktrace: never
   port: 9091
 logging:
   level:
-    org.springframework.security: debug
+    org.springframework.security: trace
 
 springdoc:
   api-docs:

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "c6946c23-e1ba-4ff4-9a49-1ac957a0489b",
+		"_postman_id": "2ae1fc4a-c787-4af1-baeb-2bb01f9cd99c",
 		"name": "API Security",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "7267364"
@@ -462,6 +462,16 @@
 				"type": "oauth2",
 				"oauth2": [
 					{
+						"key": "clientId",
+						"value": "demo-client-jwt-pkce",
+						"type": "string"
+					},
+					{
+						"key": "redirect_uri",
+						"value": "http://localhost:8080/client/callback",
+						"type": "string"
+					},
+					{
 						"key": "client_authentication",
 						"value": "body",
 						"type": "string"
@@ -477,18 +487,8 @@
 						"type": "string"
 					},
 					{
-						"key": "clientId",
-						"value": "demo-client-pkce",
-						"type": "string"
-					},
-					{
 						"key": "authUrl",
-						"value": "http://localhost:9000/oauth2/authorize",
-						"type": "string"
-					},
-					{
-						"key": "redirect_uri",
-						"value": "http://localhost:9095/client/callback",
+						"value": "http://localhost:9500/oauth2/authorize",
 						"type": "string"
 					},
 					{
@@ -538,7 +538,7 @@
 					},
 					{
 						"key": "accessTokenUrl",
-						"value": "http://localhost:9000/oauth2/token",
+						"value": "http://localhost:9500/oauth2/token",
 						"type": "string"
 					}
 				]
@@ -728,18 +728,23 @@
 		"type": "oauth2",
 		"oauth2": [
 			{
-				"key": "scope",
-				"value": "openid profile email",
+				"key": "client_authentication",
+				"value": "body",
 				"type": "string"
 			},
 			{
 				"key": "redirect_uri",
-				"value": "http://localhost:9095/client/callback",
+				"value": "http://localhost:8080/client/callback",
 				"type": "string"
 			},
 			{
-				"key": "client_authentication",
-				"value": "body",
+				"key": "clientId",
+				"value": "demo-client-jwt-pkce",
+				"type": "string"
+			},
+			{
+				"key": "scope",
+				"value": "openid profile email",
 				"type": "string"
 			},
 			{
@@ -748,13 +753,8 @@
 				"type": "string"
 			},
 			{
-				"key": "clientId",
-				"value": "demo-client-pkce",
-				"type": "string"
-			},
-			{
 				"key": "authUrl",
-				"value": "http://localhost:9000/oauth2/authorize",
+				"value": "http://localhost:9500/oauth2/authorize",
 				"type": "string"
 			},
 			{
@@ -804,7 +804,7 @@
 			},
 			{
 				"key": "accessTokenUrl",
-				"value": "http://localhost:9000/oauth2/token",
+				"value": "http://localhost:9500/oauth2/token",
 				"type": "string"
 			}
 		]
